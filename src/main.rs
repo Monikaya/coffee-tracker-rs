@@ -1,9 +1,7 @@
-use std::fs;
 // FS interaction
 use std::fs::create_dir;
 use std::fs::remove_dir_all;
 use std::fs::File;
-//use std::io::prelude::*;
 use std::io::Write;
 use std::path::Path;
 
