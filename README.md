@@ -12,6 +12,7 @@ I got pushed to create this because of [Hack Club Arcade](https://hackclub.com/a
 - [ ] Make it usable
 - [ ] Make it fun
 - [ ] Visuals
+- [ ] Make debug/error prints not happen if everything is okay (simple if statement probably).
 
 ### Long Term (may never happen idk)
 
