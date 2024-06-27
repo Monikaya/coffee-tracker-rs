@@ -1,4 +1,4 @@
-# Coffee-Tracker-rs
+# coffee-tracker-rs
  
 Quick little thing I got inspired to make because I wanted to learn **Rust**.
 I got pushed to create this because of [Hack Club Arcade](https://hackclub.com/arcade) which seems kinda awesome. Maybe I'll finally get some learning done!
