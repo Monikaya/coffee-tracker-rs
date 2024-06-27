@@ -1,19 +1,11 @@
+use std::fs;
 // FS interaction
-use std::fs::remove_file;
+use std::fs::create_dir;
+use std::fs::remove_dir_all;
 use std::fs::File;
-use std::io::prelude::*;
+//use std::io::prelude::*;
 use std::io::Write;
-
-fn debug_purge_json() -> std::io::Result<()> {
-    remove_file("coffeebase.json")?;
-    Ok(())
-}
-
-fn create_json() -> std::io::Result<()> {
-    let mut file = File::create("coffeebase.json")?;
-    file.write_all(b"{}")?;
-    Ok(())
-}
+use std::path::Path;
 
 fn main() {
     /*
@@ -27,16 +19,35 @@ fn main() {
 
     const DEBUG: bool = true;
 
-    println!("Hey, welcome to my silly Rust coffee/caffeine tracker!");
-
-    let resp = create_json();
-    eprintln!("{:?}", resp);
+    if !Path::new("data/coffeebase.json").is_file() {
+        first_run_setup();
+    }
 
     if DEBUG {
-        let db_purge = debug_purge_json();
+        let db_purge_result = debug_purge_data();
         println!(
             "Purged DB because we be in dev mode and I'm lazy.\nResult: {:?}",
-            db_purge
+            db_purge_result
         );
     }
+}
+
+fn debug_purge_data() -> std::io::Result<()> {
+    remove_dir_all("data")?;
+    Ok(())
+}
+
+fn init_data() -> std::io::Result<()> {
+    create_dir("data")?;
+    let mut file = File::create("data/coffeebase.json")?;
+    file.write_all(b"{}")?;
+    Ok(())
+}
+
+fn first_run_setup() {
+    println!("Hey, welcome to my silly Rust coffee/caffeine tracker!");
+
+    println!("First, we're going to create our files. If there are any errors we'll let you know.");
+    let resp = init_data();
+    eprintln!("{:?}", resp);
 }
