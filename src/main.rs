@@ -1,14 +1,15 @@
 // FS interaction
 use std::fs::create_dir;
 use std::fs::remove_dir_all;
-use std::fs::File;
-use std::io::Write;
 use std::path::Path;
+
+// SQLite
+use rusqlite::{Connection, Result};
 
 // User Input
 use text_io::read;
 
-fn main() {
+fn main() -> Result<()> {
     /*
         Plan:
         First we need to display what people have in their DB (json for now? probably. Something like sql would be nicer l8r).
@@ -26,9 +27,12 @@ fn main() {
     const DEBUG: bool = true;
 
     //Run Setup if data/ doesn't exist
-    if !Path::new("data/coffeebase.json").is_file() {
+    if !Path::new("data").exists() {
         first_run_setup();
     }
+
+    let connection = Connection::open("data/coffee_tracker.db")?;
+    //println!("{:?}", connection);
 
     loop {
         println!("
@@ -57,6 +61,8 @@ fn main() {
             db_purge_result
         );
     }
+
+    Ok(())
 }
 
 fn database_to_string() {
@@ -81,17 +87,15 @@ fn first_run_setup() {
     println!("Hey, welcome to my silly Rust coffee/caffeine tracker!");
 
     println!("First, we're going to create our files. If there are any errors we'll let you know.");
-    let resp = init_data();
+    let resp = init_folder();
     eprintln!("{:?}", resp);
 }
 
 /*
     Initialize *ata/ directory and data/coffeebase.json
 */
-fn init_data() -> std::io::Result<()> {
+fn init_folder() -> std::io::Result<()> {
     create_dir("data")?;
-    let mut file = File::create("data/coffeebase.json")?;
-    file.write_all(b"{}")?;
     Ok(())
 }
 
