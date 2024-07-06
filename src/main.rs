@@ -28,11 +28,11 @@ fn main() -> Result<()> {
 
     //Run Setup if data/ doesn't exist
     if !Path::new("data").exists() {
-        first_run_setup();
+        let setup_result = first_run_setup();
+        println!("Setup result: {:?}", setup_result);
     }
 
     let connection = Connection::open("data/coffee_tracker.db")?;
-    //println!("{:?}", connection);
 
     loop {
         println!("
@@ -83,22 +83,15 @@ fn modify_db_entry() {
     Mostly automated though, just have to get things setup.
     Will also return errors if there are any (there shouldn't be any).
 */
-fn first_run_setup() {
+fn first_run_setup() -> Result<()> {
     println!("Hey, welcome to my silly Rust coffee/caffeine tracker!");
-
     println!("First, we're going to create our files. If there are any errors we'll let you know.");
-    let resp = init_folder();
-    eprintln!("{:?}", resp);
-}
+    let _= create_dir("data");
+    let db = Connection::open("data/coffee-tracker.db")?;
+    //TODO: continue here next session to add tables etc for new users.
 
-/*
-    Initialize *ata/ directory and data/coffeebase.json
-*/
-fn init_folder() -> std::io::Result<()> {
-    create_dir("data")?;
     Ok(())
 }
-
 
 fn debug_purge_data() -> std::io::Result<()> {
     remove_dir_all("data")?;
