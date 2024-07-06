@@ -9,7 +9,7 @@ I got pushed to create this because of [Hack Club Arcade](https://hackclub.com/a
 
 ### Short Term
 
-- [ ] Clean-up how setup is preformed
+- [x] Clean-up how setup is preformed
 - [ ] Make it usable
 - [ ] Make it fun
 - [ ] Visuals
