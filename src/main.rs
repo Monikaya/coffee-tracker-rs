@@ -5,6 +5,9 @@ use std::fs::File;
 use std::io::Write;
 use std::path::Path;
 
+// User Input
+use text_io::read;
+
 fn main() {
     /*
         Plan:
@@ -17,14 +20,33 @@ fn main() {
     */
 
     /*
-        Just use this in order to reset database at the end of a run. This can be toggled on and off so I don't have to manually delete if I need to repetitively test stuff.
+        Just use this in order to reset database at the end of a run.
+        This can be toggled on and off so I don't have to manually delete if I need to repetitively test stuff.
     */
-
     const DEBUG: bool = true;
 
     //Run Setup if data/ doesn't exist
     if !Path::new("data/coffeebase.json").is_file() {
         first_run_setup();
+    }
+
+    loop {
+        println!("
+            What would you like to do?\n
+            1) Display your database.\n
+            2) Add an entry.\n
+            3) Modify an entry.\n
+            4) Exit program.\n
+        ");
+        let choice: i32 = read!();
+
+        match choice {
+            1 => database_to_string(),
+            2 => add_db_entry(),
+            3 => modify_db_entry(),
+            4 => break,
+            _ => println!("Invalid number, please try again."),
+        }
     }
 
     //Purge the database if the DEBUG value is true.
@@ -37,19 +59,16 @@ fn main() {
     }
 }
 
-fn debug_purge_data() -> std::io::Result<()> {
-    remove_dir_all("data")?;
-    Ok(())
+fn database_to_string() {
+    println!("Doesn't exist yet.");
 }
 
-/*
-    Initialize *ata/ directory and data/coffeebase.json
-*/
-fn init_data() -> std::io::Result<()> {
-    create_dir("data")?;
-    let mut file = File::create("data/coffeebase.json")?;
-    file.write_all(b"{}")?;
-    Ok(())
+fn add_db_entry() {
+    println!("Doesn't exist yet.");
+}
+
+fn modify_db_entry() {
+    println!("Def doesn't exist yet :P");
 }
 
 /*
@@ -64,4 +83,20 @@ fn first_run_setup() {
     println!("First, we're going to create our files. If there are any errors we'll let you know.");
     let resp = init_data();
     eprintln!("{:?}", resp);
+}
+
+/*
+    Initialize *ata/ directory and data/coffeebase.json
+*/
+fn init_data() -> std::io::Result<()> {
+    create_dir("data")?;
+    let mut file = File::create("data/coffeebase.json")?;
+    file.write_all(b"{}")?;
+    Ok(())
+}
+
+
+fn debug_purge_data() -> std::io::Result<()> {
+    remove_dir_all("data")?;
+    Ok(())
 }
