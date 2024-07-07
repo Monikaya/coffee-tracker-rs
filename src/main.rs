@@ -51,6 +51,7 @@ fn main() -> Result<()> {
             4 => break,
             _ => println!("Invalid number, please try again."),
         }
+        //TODO: "press enter to return to menu" because people take time to read.
     }
 
     //Purge the database if the DEBUG value is true.
